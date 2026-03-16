@@ -1,0 +1,95 @@
+import sympy as sp
+
+# ====================================================================
+# EL "ACORDEÓN" DE SYMPY PARA EL EXAMEN DE MATEMÁTICA APLICADA
+# Archivo de consulta rápida (Copiar y pegar lo que necesites)
+# ====================================================================
+
+def consulta_simbolos():
+    """ 1. SÍMBOLOS Y CONSTANTES MATEMÁTICAS """
+    
+    t = sp.Symbol('t')                                     # Variable normal t
+    x = sp.Symbol('x', real=True)                          # Variable estrictamente real
+    n = sp.Symbol('n', integer=True, positive=True)        # Variable entera y positiva (CRUCIAL para series)
+    A, B, C = sp.symbols('A B C')                          # Crear múltiples variables a la vez
+
+    pi_val = sp.pi      # El número pi (3.14159...)
+    j_val = sp.I        # El número imaginario j (¡es una 'I' mayúscula!)
+    inf_val = sp.oo     # Infinito (son dos letras 'o' minúsculas)
+
+
+def consulta_funciones(t):
+    """ 2. ESCRIBIENDO FUNCIONES MATEMÁTICAS """
+    
+    coseno = sp.cos(t)
+    seno = sp.sin(t)
+    exponencial = sp.exp(t)
+    raiz = sp.sqrt(t)
+    potencia = t**2     # ¡ATENCIÓN! En Python no se usa ^ para potencias, siempre usa **
+    
+    # Función por tramos (Piecewise)
+    # Formato: (valor, condicion)
+    # Ejemplo: f(t) vale 1 si 0 < t < 1, y vale 0 si t > 1
+    f_tramos = sp.Piecewise( (1, (t > 0) & (t < 1)), (0, t > 1) )
+
+
+def consulta_calculo_e_integrales(t, n):
+    """ 3. CÁLCULO E INTEGRALES """
+    
+    # Integral definida
+    # Formato: sp.integrate(funcion, (variable, limite_inf, limite_sup))
+    integral = sp.integrate(t**2, (t, 0, sp.pi))
+    
+    # Símbolo de Sumatoria (solo dibuja el símbolo, no calcula numéricamente)
+    # Formato: sp.Sum(termino_general, (variable, inicio, fin))
+    sumatoria = sp.Sum(1/n, (n, 1, sp.oo))
+
+
+def consulta_algebra_y_simplificacion(t, n):
+    """ 4. ÁLGEBRA Y SIMPLIFICACIÓN (La magia) """
+    
+    expr = sp.sin(n * sp.pi) + t**2
+    
+    simplificada = sp.simplify(expr)         # Simplifica, junta términos y elimina ceros
+    evaluada = expr.subs(n, 5)               # Sustituye la letra 'n' por un 5
+    decimal = sp.sqrt(2).evalf(5)            # Pasa una fracción o raíz a decimal con 5 cifras
+    
+    # sp.Abs() sirve para valor absoluto normal y para magnitud de números complejos
+    magnitud = sp.Abs(3 + 4*sp.I)            # Te devolverá 5 automáticamente
+    
+    # Truco para series complejas: forzar a convertir exponenciales a senos/cosenos
+    expr_exp = sp.exp(sp.I * t)
+    convertida = expr_exp.rewrite(sp.sin)
+
+
+def consulta_ecuaciones_y_sistemas():
+    """ 5. ECUACIONES Y SISTEMAS (Para las EDOs) """
+    
+    A_n, B_n = sp.symbols('A_n B_n')
+    
+    # Plantear una ecuación: A_n + B_n = 5
+    eq1 = sp.Eq(A_n + B_n, 5)
+    
+    # Resolver un sistema de ecuaciones
+    solucion = sp.solve((eq1, eq1), (A_n, B_n))
+
+
+def consulta_fasores_y_complejos():
+    """ 6. NÚMEROS COMPLEJOS Y FASORES (Para Circuitos) """
+    
+    z = 3 + 4*sp.I
+    
+    parte_real = sp.re(z)       # Extrae el 3
+    parte_imag = sp.im(z)       # Extrae el 4
+    
+    # Ángulo/fase correcto (toma en cuenta los cuadrantes matemáticos)
+    # Formato: sp.atan2(imaginario, real)
+    angulo = sp.atan2(parte_imag, parte_real)
+
+
+def consulta_impresion(expr):
+    """ 7. IMPRESIÓN EN PANTALLA """
+    
+    # Pretty Print: Imprime la matemática "bonita" en la terminal
+    # Dibuja las fracciones hacia abajo y las raíces como casitas
+    sp.pprint(expr)
